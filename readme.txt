@@ -7,7 +7,7 @@ Requires at least: 2.7
 Tested up to: 3.0-beta2-14697
 Stable tag: 1.0.0
 
-A tiny but high in demand widget to post sticky or "featured" posts into any widget area.
+A tiny but high in demand widget to post sticky or "featured" posts into any widget area. Widget provided by http://smwphosting.com/.
 
 == Description ==
 
@@ -18,6 +18,7 @@ Features include:
 * sidebar widget added to your "Widgets" appearance settings that shows only sticky posts.
 * option to set the title when displayed on the home page.
 * compatable with the premium "ClassiPress" theme which can be purchased at http://wpclassipress.com/
+* demo of activated widget available at http://cpmodlite.smwphosting.com/
 
 Features Coming in Version 2:
 
@@ -56,3 +57,7 @@ A: Typically they are posts that you want to "always show on top" of your blog p
 Q: How do I use the plugin?
 A: Simple, just install it from your WP-Admin->Plugins page, then you will find a "widget" from the appearance section that you can drag
    into any of your sidebar areas. The exact placement will greatly change depending on your selected theme.
+
+== Screenshots ==
+
+1.A Demo of the Widget using the ClassiPress theme.
