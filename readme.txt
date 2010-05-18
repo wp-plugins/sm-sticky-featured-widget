@@ -17,7 +17,7 @@ Features include:
 
 * sidebar widget added to your "Widgets" appearance settings that shows only sticky posts.
 * option to set the title when displayed on the home page.
-* compatable with the premium "ClassiPress" theme which can be purchased at http://wpclassipress.com/
+* compatable with the premium "ClassiPress" theme which can be purchased at [ClassiPress](http://wpclassipress.com/ "www.wpclassipress.com")
 * demo of activated widget available at http://cpmodlite.smwphosting.com/
 
 Features Coming in Version 2:
@@ -39,7 +39,10 @@ To install the plugin manually:
 4. Find and "click and drag" the newly created widget to your sidebar and set the options.
 
 == Changelog ==
-- Version 1.0 is the original released version. No changes logged yet.
+- Version 1.0.0 is the original released version. No changes logged yet.
+
+== Upgrade Notice ==
+- Version 1.0.0 is the original released version. No changes logged yet.
 
 = 1.0.0 =
 Created the option to set the title when shown on the homepage (subpages show category names which will be optional in the future)
@@ -60,4 +63,6 @@ A: Simple, just install it from your WP-Admin->Plugins page, then you will find 
 
 == Screenshots ==
 
-1.A Demo of the Widget using the ClassiPress theme.
+1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
+the directory of the stable readme.txt, so in this case, `/tags/4.3/screenshot-1.png` (or jpg, jpeg, gif)
+2. 
