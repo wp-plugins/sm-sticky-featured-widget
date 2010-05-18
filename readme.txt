@@ -1,7 +1,7 @@
 === SM Sticky Featured Widget ===
 
 Contributors: Sethmatics Inc feat. Seth Carstens
-Donate link: http://smwphosting.com/
+Donate link: http://smwphosting.com/extend
 Tags: widgets, sticky, featured, classipress
 Requires at least: 2.7
 Tested up to: 3.0-beta2-14697
@@ -63,6 +63,5 @@ A: Simple, just install it from your WP-Admin->Plugins page, then you will find 
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the directory of the stable readme.txt, so in this case, `/tags/4.3/screenshot-1.png` (or jpg, jpeg, gif)
+1. A sample of the widget when used on premium theme like ClassiPress.
 2. 
