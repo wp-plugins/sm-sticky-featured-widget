@@ -71,6 +71,7 @@ class WP_Widget_smSticky extends WP_Widget {
 			echo '<h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
 			echo '<br style="clear: both;" />';
 		endwhile;
+		//End of The Loop
 		
 		//Reset Query
 		//wp_reset_query();
@@ -104,5 +105,5 @@ class WP_Widget_smSticky extends WP_Widget {
 } // end class WP_Widget_smSticky
 
 // Register the widget.
-add_action('widgets_init', create_function('', 'return register_widget("WP_Widget_smSticky");'),1,10);
+add_action('widgets_init', create_function('', 'return register_widget("WP_Widget_smSticky");'));
 ?>
