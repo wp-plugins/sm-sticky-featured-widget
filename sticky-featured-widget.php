@@ -43,7 +43,35 @@ class WP_Widget_smSticky extends WP_Widget {
 		if($get_cat_id == 0 || is_home()) {
 			if(isset($instance['title'])) echo $before_title . $instance['title'] . $after_title;
 			else  echo $before_title . __('Sticky Posts', 'cp') . $after_title;
-			$argsqry = array('cat' => $blogcatexclude);	
+			
+			//CLASSIPRESS ONLY grab a string of all the blog categories.
+			$blog_cats_string = (string)CP_BLOG_CAT_ID;
+			$blog_cat_args = array(
+				'type'                     => 'post',
+				'child_of'                 => CP_BLOG_CAT_ID,
+				'pad_counts'               => false );
+			$blog_categories = get_categories($blog_cat_args);
+			foreach ($blog_categories as $cat) {
+				$blog_cats_string .= "," . $cat->cat_ID;
+			}
+			
+			//grab all the categories and exclude the blog categories
+			$cp_cat_args = array(
+				'type'                     => 'post',
+				'child_of'                 => 0,
+				'orderby'                  => 'name',
+				'order'                    => 'ASC',
+				'hide_empty'               => 1,
+				'hierarchical'             => 1,
+				'exclude'                  => $blog_cats_string,
+				'pad_counts'               => false );
+			
+			$cp_categories = get_categories($cp_cat_args);
+			foreach ($cp_categories as $cat) {
+				$cp_cats_string .= $cat->cat_ID . ",";
+			}
+
+			$argsqry = array('cat' => $cp_cats_string);	
 		}
 		//if no error and not on the home page, we must be in a category, display that title instead.
 		else {
@@ -54,7 +82,8 @@ class WP_Widget_smSticky extends WP_Widget {
 		//always use these attributes when loading the query
 		$queryArrayOrString = array(
 			'post__in'  => get_option('sticky_posts'),
-			'posts_per_page' => 4,
+			'posts_per_page' => 5,
+			'orderby' => 'rand',
 			'post_status' => 'publish');
 
 		if(isset($argsqry)) $queryArrayOrString = array_merge($argsqry, $queryArrayOrString);
@@ -106,4 +135,5 @@ class WP_Widget_smSticky extends WP_Widget {
 
 // Register the widget.
 add_action('widgets_init', create_function('', 'return register_widget("WP_Widget_smSticky");'));
+
 ?>
