@@ -4,14 +4,16 @@ Contributors: Sethmatics Inc feat. Seth Carstens
 Donate link: http://smwphosting.com/extend
 Tags: widgets, sticky, featured, classipress
 Requires at least: 2.7
-Tested up to: 3.0-beta2-14697
-Stable tag: 1.0.1
+Tested up to: 3.0-RC1
+Stable tag: 1.0.2
 
 A tiny but high in demand widget to post sticky or "featured" posts into any widget area. Widget provided by http://smwphosting.com/.
 
 == Description ==
 
 A tiny but high in demand widget to post sticky or "featured" posts into any widget area. We would appriciate any assistance you would like to provide with coding of enhancments to this plugin.
+Using Documentation from core trac default widgets as a guideline for development:
+http://core.trac.wordpress.org/browser/trunk/wp-includes/default-widgets.php
 
 Features include:
 
@@ -21,14 +23,21 @@ Features include:
 * demo of activated widget available at http://cpmodlite.smwphosting.com/
 * uses the WP_Query to efficiently grab your sticky posts
 * makes use of new thumbnails and "featured images" for wordpress 2.9.2 and wordpress 3.0
-
-
-Features Coming in Version 2:
-
-* option to disable display of the title, or always show a static title instead of the forced category titles.
-* option to set the number of posts listed
 * option to turn on and off the thumbnails
+* option to set the number of posts listed
+* option Only show sticky posts of the post category & sub categories?
+* detect if no featured ads are in category/subcategories and post any featured posts/pages.
+* If no featured ads exist anywhere, display a message indicating no ads have been featured.
 
+Features Coming in the Next Version Updates:
+
+* option to disable display of the title, or always show a force title option text regardless of website page type.
+* option to specify "only included" categoires or to "exclude only" certain categories.
+* option to "only feature listed post / page ID's" in the widget
+* option to turn off the "random" order listing and choose from a dropdown of order types.
+* option to limit the title to X number of characters
+* option to display exceprt up to X number of characters or default to the wordpress excerpt words and length configured.
+* option to enable a jQuery based veritcle sidebar carousel (exact model to be determined).
 
 Don't forget to rate our plugin so we know how we are doing!
 
@@ -46,11 +55,15 @@ To install the plugin manually:
 - Version 1.0.0 is the original released version. No changes logged yet.
 
 == Upgrade Notice ==
-- Version 1.0.1 requires no special upgrade instructions.
+Version 1.0.2
+- Adding the ability to "include" only certain categories OR exclude only certain categories.
+- Added the ability to turn on or off thumbnails for the 
+- Added the option to set the number of posts listed
 
-= 1.0.1 =
+Version 1.0.1
 Rewrote all the query code to properly display only featured sticky posts and also allows the "ClassiPress" theme properly exclude all blog categories.
-= 1.0.0 =
+
+Version 1.0.0
 Created the option to set the title when shown on the homepage (subpages show category names which will be optional in the future)
 Registered the Widget (recurring so you can use it multiple times)
 
