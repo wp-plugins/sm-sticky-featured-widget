@@ -4,7 +4,7 @@ Contributors: Sethmatics Inc feat. Seth Carstens
 Donate link: http://smwphosting.com/extend
 Tags: widgets, sticky, featured, classipress
 Requires at least: 2.7
-Tested up to: 3.0-RC1
+Tested up to: 3.1
 Stable tag: 1.0.2
 
 A tiny but high in demand widget to post sticky or "featured" posts into any widget area. Widget provided by http://smwphosting.com/.
@@ -19,7 +19,7 @@ Features include:
 
 * sidebar widget added to your "Widgets" appearance settings that shows only sticky posts.
 * option to set the title when displayed on the home page.
-* Now COMPLETELY compatable with the premium "ClassiPress" theme which can be purchased at [ClassiPress](http://wpclassipress.com/ "www.wpclassipress.com")
+* Now COMPLETELY compatable with the premium "ClassiPress" theme which can be purchased at [ClassiPress](http://appthemes.com/cp/go.php?r=2505&i=b3  "www.appthemes.com")
 * demo of activated widget available at http://cpmodlite.smwphosting.com/
 * uses the WP_Query to efficiently grab your sticky posts
 * makes use of new thumbnails and "featured images" for wordpress 2.9.2 and wordpress 3.0

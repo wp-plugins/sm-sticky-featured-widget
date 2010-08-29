@@ -4,7 +4,7 @@ Plugin Name: SM Sticky Featured Widget
 Plugin URI: http://www.smwphosting.com/extend/plugins/sm-sticky-widget
 Description: A tiny but high in demand widget to post sticky or "featured" posts into any widget area.
 Author: Seth Carstens
-Version: 1.0.2
+Version: 1.0.3
 Author URI: http://www.smwphosting.com/
 */
 
