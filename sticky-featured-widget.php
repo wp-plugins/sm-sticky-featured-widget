@@ -2,9 +2,9 @@
 /*
 Plugin Name: SM Sticky Featured Widget
 Plugin URI: http://www.smwphosting.com/extend/plugins/sm-sticky-widget
-Description: A tiny but high in demand widget to post sticky or "featured" posts into any widget area.
+Description: A tiny but high in demand widget to post sticky or "featured" posts into any widget area complient with ClassiPress.
 Author: Seth Carstens
-Version: 1.0.3
+Version: 1.1.0
 Author URI: http://www.smwphosting.com/
 */
 
@@ -21,8 +21,23 @@ class WP_Widget_smSticky extends WP_Widget {
 
 	// This code displays the widget on the screen.
 	function widget($args, $instance) {
+		wp_reset_query();
 		extract($args);
-		echo $before_widget;
+		
+		//detect and set configuration for classipress or standard wordpress theme
+		if(post_type_exists('ad_listing')) { $cp = true; $postType = 'ad_listing'; $catType = 'ad_cat'; }
+		else { $cp = false; $postType = 'post'; $catType = 'category'; }
+		
+		if(get_query_var('taxonomy')) {
+			$term = get_term_by('slug', get_query_var('term'), get_query_var('taxonomy'));
+		}
+		elseif(is_category()) {
+			$term = get_term_by('id', get_cat_ID(single_cat_title("", false)), 'category');
+		}
+		elseif(is_single()) { //single page
+			$terms = wp_get_post_terms(get_the_ID(), $catType); //print_r($terms); exit;
+			$term = $terms[0];
+		}
 
 		/* User-selected settings. */
 		//title
@@ -34,91 +49,82 @@ class WP_Widget_smSticky extends WP_Widget {
 		//thumbnails
 		$showthumbs = isset( $instance['showthumbs'] ) ? $instance['showthumbs'] : false;
 		$catTitles = isset( $instance['catTitles'] ) ? $instance['catTitles'] : false;
-
-
-		//Building The Query
-		//if the blog category is set, get it and set it to a negative number to exclude it
-		if(get_option('cp_blog_cat')) $blogcatexclude = (int)CP_BLOG_CAT_ID * (-1);
-		else $blogcatexclude = '';
 		
-		//getting the category depending on the type of page we are on IS_SINGLE=POST/PAGE
-		if(is_single()) {
-			$categories = get_the_category($post->ID);
-			$get_cat_name = $categories[0]->cat_name; 
-			$get_cat_id = $categories[0]->cat_ID;
-		}
-		//else its a ARCHIVE/INDEX
-		else
-		{
-			$get_cat_name = single_cat_title("", false);
-			$get_cat_id = get_cat_ID($get_cat_name);
-			
-		}
-		
-		//if not on the home page, we must be in a category, display that title instead.
-		if( ($get_cat_id > 0) && $catTitles) {
-			echo $before_title . __('Featured in ') . $get_cat_name . $after_title;	
-			$argsqry = array('cat' => $get_cat_id);
-		}
-		//means this is the home page : use defined title and exclude blog category ID's
-		else {
-			if(isset($instance['title'])) echo $before_title . $instance['title'] . $after_title;
-			else  echo $before_title . __('Sticky Posts', 'cp') . $after_title;
-			
-			//CLASSIPRESS ONLY grab a string of all the blog categories.
-			$blog_cats_string = (string)CP_BLOG_CAT_ID;
-			$blog_cat_args = array(
-				'type'                     => 'post',
-				'child_of'                 => CP_BLOG_CAT_ID,
-				'pad_counts'               => false );
-			$blog_categories = get_categories($blog_cat_args);
-			foreach ($blog_categories as $cat) {
-				$blog_cats_string .= "," . $cat->cat_ID;
-			}
-
-			//grab all the categories and exclude the blog categories
-			$cp_cat_args = array(
-				'type'                     => 'post',
-				'child_of'                 => 0,
-				'orderby'                  => 'name',
-				'order'                    => 'ASC',
-				'hide_empty'               => 1,
-				'hierarchical'             => 1,
-				'exclude'                  => $blog_cats_string,
-				'pad_counts'               => false );
-			
-			$cp_categories = get_categories($cp_cat_args);
-			foreach ($cp_categories as $cat) {
-				$cp_cats_string .= $cat->cat_ID . ",";
-			}
-
-			if(trim($cp_cats_string) != '') { $argsqry = array('cat' => $cp_cats_string); }
-			
-		}
+		//determine the sticky post type (custom post types)
+		if(post_type_exists('ad_listing')) $postType = 'ad_listing';
+		else $postType = 'post';
 		
 		//always use these attributes when loading the query
 		$queryArrayOrString = array(
 			'post__in'  => get_option('sticky_posts'),
+			'post_type' => $postType,
 			'posts_per_page' => $number,
 			'orderby' => 'rand',
 			'post_status' => 'publish');
-		if(isset($argsqry) && (count($argsqry) > 0) ) { $queryArrayOrString = array_merge($argsqry, $queryArrayOrString); }
-		$smStickyPosts = new WP_Query($queryArrayOrString);
 
-		//The Loop
-		while ($smStickyPosts->have_posts()) : $smStickyPosts->the_post();
-			if (has_post_thumbnail() && $showthumbs){
-				echo '<a href="' . get_permalink() . '">';
-				the_post_thumbnail(array(get_option('thumbnail_size_w'),get_option('thumbnail_size_h')), array('class' => 'alignleft'));
-				echo '</a>';
-			}
-			elseif(function_exists('cp_get_image_url_feat') && $showthumbs) cp_get_image_url_feat(get_the_id(), 'thumbnail', 'captify', 1);
-			echo '<h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
-			echo '<br style="clear: both;" />';
-		endwhile;
-		//End of The Loop
+		//if there is a term, only display featured ads from that term assuming the option is turned on
+		if($term->slug && $catTitles) {
+			if($cp) $queryArrayOrString['ad_cat'] = $term->slug;
+			else $queryArrayOrString['category_name'] = $term->slug;
+		}
+		$smStickyPosts = new WP_Query($queryArrayOrString);
 		
+		//start printing the widget
+		echo $before_widget;
+		
+		//if not on the home page, we must be in a category, display that title instead.
+		if( !is_home() && $catTitles) echo $before_title . __('Featured in ') . $term->name . $after_title;	
+		//means this is the home page : use defined title and exclude blog category ID's
+		else {
+			if(isset($instance['title'])) echo $before_title . $instance['title'] . $after_title;
+			else  echo $before_title . __('Sticky Posts', 'cp') . $after_title;			
+		}
+		
+		//The Loop (modified)
+		echo '<ul class="featured-sidebar">';
+		$i = 0;
+		if(!$smStickyPosts->have_posts()) echo 'No Featured Posts Found';
+		while ($smStickyPosts->have_posts() && ($i < $smStickyPosts->query_vars['posts_per_page'])) : $smStickyPosts->the_post();
+			if(post_type_exists('ad_listing')) : 
+		?>
+			<li>
+				<div class="post-thumb" style="min-width:50px;">
+					<?php if(function_exists('cp_ad_featured_thumbnail') && $showthumbs) cp_ad_featured_thumbnail();
+				elseif (has_post_thumbnail() && $showthumbs){
+					echo '<a href="' . get_permalink() . '">';
+					the_post_thumbnail(array(get_option('thumbnail_size_w'),get_option('thumbnail_size_h')), array('class' => 'alignleft'));
+					echo '</a>';
+				}	 ?>
+				</div>
+				<h3><a href="<?php the_permalink(); ?>"><?php if (mb_strlen(get_the_title()) >= 40) echo mb_substr(get_the_title(), 0, 40).'...'; else the_title(); ?></a></h3>
+				<p class="side-meta"><span class="folder"><?php if (get_the_category()) the_category(', '); else echo get_the_term_list($post->ID, 'ad_cat', '', ', ', ''); ?></span> | <?php if(get_post_meta(get_the_ID(), 'price', true)) cp_get_price_legacy(get_the_ID()); else cp_get_price(get_the_ID()); ?></p>
+				<p><?php echo mb_substr(strip_tags(get_the_content()), 0, 160).'...';?></p>
+			</li>
+			<?php
+			else :	
+				echo '<li>';
+				if(function_exists('cp_ad_featured_thumbnail') && $showthumbs) cp_ad_featured_thumbnail();
+				elseif (has_post_thumbnail() && $showthumbs){
+					echo '<a href="' . get_permalink() . '">';
+					the_post_thumbnail(array(get_option('thumbnail_size_w'),get_option('thumbnail_size_h')), array('style' => 'float: left; width: 50px; height: 50px; margin-right: 5px;'));
+					echo '</a>';
+				}		
+				echo '<a href="' . get_permalink() . '">' . get_the_title() . '</a>';
+				echo '<p style="margin: 0px;">'.mb_substr(strip_tags(get_the_content()), 0, 160).'...'.'</p>';
+				echo '<br style="clear: both;" />';
+				echo '</li>';
+			endif;
+			$i++;
+		endwhile;
+		echo '</ul>';
+		//End of The Loop
 		echo $after_widget;
+		
+		//debug printing
+		//echo 'query_vars <pre>'; print_r($smStickyPosts->query_vars); echo '</pre>';
+		//echo '$queryArrayOrString <pre>'; print_r($queryArrayOrString); echo '</pre>';
+		//echo '$term <pre>'; print_r($term); echo '</pre>';
+		wp_reset_query();
 	} // End function widget.
 	
 	
