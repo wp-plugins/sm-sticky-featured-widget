@@ -7,7 +7,7 @@ Requires at least: 3.0
 Tested up to: 3.1
 Stable tag: 1.1.0
 
-A tiny but high in demand widget to post sticky or "featured" posts into any widget area. Widget provided by http://smwphosting.com/.
+A tiny but high in demand widget to post sticky or "featured" posts into any widget area. Widget provided by http://sethmatics.com/.
 
 == Description ==
 

@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: SM Sticky Featured Widget
-Plugin URI: http://www.smwphosting.com/extend/plugins/sm-sticky-widget
+Plugin URI: http://sethmatics.com/extend/plugins/sm-sticky-widget
 Description: A tiny but high in demand widget to post sticky or "featured" posts into any widget area complient with ClassiPress.
 Author: Seth Carstens
 Version: 1.1.0
-Author URI: http://www.smwphosting.com/
+Author URI: http://sethmatics.com/
 */
 
 // Register the widget.
