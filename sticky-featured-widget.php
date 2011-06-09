@@ -97,7 +97,7 @@ class WP_Widget_smSticky extends WP_Widget {
 				}	 ?>
 				</div>
 				<h3><a href="<?php the_permalink(); ?>"><?php if (mb_strlen(get_the_title()) >= 40) echo mb_substr(get_the_title(), 0, 40).'...'; else the_title(); ?></a></h3>
-				<p class="side-meta"><span class="folder"><?php if (get_the_category()) the_category(', '); else echo get_the_term_list($post->ID, 'ad_cat', '', ', ', ''); ?></span> | <?php if(get_post_meta(get_the_ID(), 'price', true)) cp_get_price_legacy(get_the_ID()); else cp_get_price(get_the_ID()); ?></p>
+				<p class="side-meta"><span class="folder"><?php if (get_the_category()) the_category(', '); else echo get_the_term_list($post->ID, 'ad_cat', '', ', ', ''); ?></span> | <?php if(get_post_meta(get_the_ID(), 'price', true)) cp_get_price_legacy(get_the_ID()); else cp_get_price(get_the_ID(), 'cp_price'); ?></p>
 				<p><?php echo mb_substr(strip_tags(get_the_content()), 0, 160).'...';?></p>
 			</li>
 			<?php
