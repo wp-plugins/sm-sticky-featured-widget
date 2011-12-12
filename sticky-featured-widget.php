@@ -4,7 +4,7 @@ Plugin Name: SM Sticky Featured Widget
 Plugin URI: http://sethmatics.com/extend/plugins/sm-sticky-widget
 Description: A tiny but high in demand widget to post sticky or "featured" posts into any widget area complient with ClassiPress.
 Author: Seth Carstens
-Version: 1.1.0
+Version: 1.2.0
 Author URI: http://sethmatics.com/
 */
 
@@ -56,12 +56,13 @@ class WP_Widget_smSticky extends WP_Widget {
 		
 		//always use these attributes when loading the query
 		$queryArrayOrString = array(
-			'post__in'  => get_option('sticky_posts'),
 			'post_type' => $postType,
 			'posts_per_page' => $number,
 			'orderby' => 'rand',
 			'post_status' => 'publish');
-
+		if($instance['showType'] == 'sticky') $queryArrayOrString['post__in'] = get_option('sticky_posts');
+		else if($instance['showType'] == 'reg') $queryArrayOrString['post__not_in'] = get_option('sticky_posts');
+		
 		//if there is a term, only display featured ads from that term assuming the option is turned on
 		if($term->slug && $catTitles) {
 			if($cp) $queryArrayOrString['ad_cat'] = $term->slug;
@@ -137,6 +138,7 @@ class WP_Widget_smSticky extends WP_Widget {
 		$instance['number'] = (int) $new_instance['number'];
         $instance['showthumbs'] = isset($new_instance['showthumbs']) ? 1 : 0;
         $instance['catTitles'] = isset($new_instance['catTitles']) ? 1 : 0;
+		$instance['showType'] = $new_instance['showType'];
 		return $instance;
 	} // End function update
 	
@@ -157,9 +159,15 @@ class WP_Widget_smSticky extends WP_Widget {
     <p><input class="checkbox" type="checkbox" <?php checked( $instance['showthumbs'], true ); ?> id="<?php echo $this->get_field_id( 'showthumbs' ); ?>" name="<?php echo $this->get_field_name('showthumbs'); ?>" />
     <label for="<?php echo $this->get_field_id('showthumbs'); ?>"> Display Thumbnails?</label></p>
     
-        <p><input class="checkbox" type="checkbox" <?php checked( $instance['catTitles'], true ); ?> id="<?php echo $this->get_field_id( 'catTitles' ); ?>" name="<?php echo $this->get_field_name('catTitles'); ?>" />
+    <p><input class="checkbox" type="checkbox" <?php checked( $instance['catTitles'], true ); ?> id="<?php echo $this->get_field_id( 'catTitles' ); ?>" name="<?php echo $this->get_field_name('catTitles'); ?>" />
     <label for="<?php echo $this->get_field_id('catTitles'); ?>"> Only show sticky posts of the post category & sub categories?</label></p>
-    
+	
+    <p><label for="<?php echo $this->get_field_id('showType'); ?>"> Posts to display: </label>
+    	<select class="dropdown" id="<?php echo $this->get_field_id( 'showType' ); ?>" name="<?php echo $this->get_field_name('showType'); ?>">
+    		<option value="sticky" <?php selected( $instance['showType'], 'sticky' ); ?>>Sticky</option>
+            <option value="all" <?php selected( $instance['showType'], 'all' ); ?>>All</option>
+            <option value="reg" <?php selected( $instance['showType'], 'reg' ); ?>>Non-Sticky</option>
+        </select></p>
     </div>
     
 <?php
