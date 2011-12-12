@@ -4,8 +4,8 @@ Contributors: Sethmatics Inc feat. Seth Carstens
 Donate link: http://sethmatics.com/extend/plugins/sm-sticky-widget
 Tags: widgets, sticky, featured, classipress
 Requires at least: 3.0
-Tested up to: 3.1
-Stable tag: 1.1.0
+Tested up to: 3.2.1
+Stable tag: 1.2.0
 
 A tiny but high in demand widget to post sticky or "featured" posts into any widget area. Widget provided by http://sethmatics.com/.
 
@@ -54,6 +54,9 @@ To install the plugin manually:
 - Heavily modified the queries and is now 100% ClassiPress compliant.
 
 == Upgrade Notice ==
+Version 1.2.0
+- Added the option to display "Non-sticky" posts into the widget as requested by a user (even though it seemed a bit ironic)
+
 Version 1.1.0
 - Compatable with ClassiPress version 3.0.5.X and 3.1
 - Fixed homepage number of displayed ads bug
