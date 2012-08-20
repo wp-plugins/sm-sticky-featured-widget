@@ -4,7 +4,7 @@ Plugin Name: SM Sticky Featured Widget
 Plugin URI: http://sethmatics.com/extend/plugins/sm-sticky-widget
 Description: A tiny but high in demand widget to post sticky or "featured" posts into any widget area complient with ClassiPress.
 Author: Seth Carstens
-Version: 1.2.0
+Version: 1.2.1
 Author URI: http://sethmatics.com/
 */
 
@@ -90,6 +90,7 @@ class WP_Widget_smSticky extends WP_Widget {
 		?>
 			<li>
 				<div class="post-thumb" style="min-width:50px;">
+                <?php if(get_post_meta(get_the_ID(), 'cp_ad_sold', true) == 'yes') : ?><div class="sold-ribbon"></div><?php endif; ?>
 					<?php if(function_exists('cp_ad_featured_thumbnail') && $showthumbs) cp_ad_featured_thumbnail();
 				elseif (has_post_thumbnail() && $showthumbs){
 					echo '<a href="' . get_permalink() . '">';
@@ -98,8 +99,8 @@ class WP_Widget_smSticky extends WP_Widget {
 				}	 ?>
 				</div>
 				<h3><a href="<?php the_permalink(); ?>"><?php if (mb_strlen(get_the_title()) >= 40) echo mb_substr(get_the_title(), 0, 40).'...'; else the_title(); ?></a></h3>
-				<p class="side-meta"><span class="folder"><?php if (get_the_category()) the_category(', '); else echo get_the_term_list($post->ID, 'ad_cat', '', ', ', ''); ?></span> | <?php if(get_post_meta(get_the_ID(), 'price', true)) cp_get_price_legacy(get_the_ID()); else cp_get_price(get_the_ID(), 'cp_price'); ?></p>
-				<p><?php echo mb_substr(strip_tags(get_the_content()), 0, 160).'...';?></p>
+				<p class="side-meta"><span class="folder"><?php if (get_the_category()) the_category(', '); else echo get_the_term_list($post->ID, 'ad_cat', '', ', ', ''); ?></span> <?php if(get_post_meta(get_the_ID(), 'cp_ad_sold', true) == 'yes') : echo apply_filters('sticky_featured_sold_text', ' '); else: ?>| <?php echo cp_get_price(get_the_ID(), 'cp_price'); ?>				<?php endif; ?>																							<!--<?php if(get_post_meta(get_the_ID(), 'price', true)) cp_get_price_legacy(get_the_ID()); else cp_get_price(get_the_ID(), 'cp_price'); ?></p>-->
+				<p><?php echo mb_substr(strip_tags(get_the_content()), 0, 80).'...';?></p>
 			</li>
 			<?php
 			else :	

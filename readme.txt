@@ -5,7 +5,7 @@ Donate link: http://sethmatics.com/extend/plugins/sm-sticky-widget
 Tags: widgets, sticky, featured, classipress
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 
 A tiny but high in demand widget to post sticky or "featured" posts into any widget area. Widget provided by http://sethmatics.com/.
 
@@ -49,11 +49,27 @@ To install the plugin manually:
 3. Activate the plugin through the Plugins section in your WordPress admin
 4. Find and "click and drag" the newly created widget to your sidebar and set the options.
 
+*New in 1.2.1
+
+Add the following style to your ClassiPress child themes stylesheet and then upload your own 32px by 32px corner sold ribbon graphics to enhance your ClassiPress theme. Demo available at http://cpmodlite.sethmatics.com/
+
+/* apply new sold corner banner from sm sticky featured widget */
+.sold-ribbon {	
+	height: 32px;
+	width: 32px;
+	background: url(images/sold_corner_32.png) no-repeat;
+	position: absolute;
+}
+
 == Changelog ==
 - Updated for custom post types used in ClassiPress.
 - Heavily modified the queries and is now 100% ClassiPress compliant.
+- See upgrade notices for more information about each version
 
 == Upgrade Notice ==
+Version 1.2.1
+- Added sold-ribbon div tag for ClassiPress users that want to display sold graphics to overlay the featured images
+
 Version 1.2.0
 - Added the option to display "Non-sticky" posts into the widget as requested by a user (even though it seemed a bit ironic)
 
