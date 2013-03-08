@@ -4,7 +4,7 @@ Plugin Name: SM Sticky Featured Widget
 Plugin URI: http://sethmatics.com/extend/plugins/sm-sticky-widget
 Description: A tiny but high in demand widget to post sticky or "featured" posts into any widget area complient with ClassiPress.
 Author: Seth Carstens
-Version: 1.2.1
+Version: 1.2.2
 Author URI: http://sethmatics.com/
 */
 

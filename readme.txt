@@ -17,7 +17,7 @@ http://core.trac.wordpress.org/browser/trunk/wp-includes/default-widgets.php
 
 Features include:
 
-* Now COMPLETELY compatable with the premium "ClassiPress" theme which can be purchased at [ClassiPress](http://appthemes.com/cp/go.php?r=2505&i=b3  "www.appthemes.com")
+* Now COMPLETELY compatable with the premium "ClassiPress" theme which can be purchased at [ClassiPress](http://www.appthemes.com/themes/classipress/  "www.appthemes.com")
 * sidebar widget added to your "Widgets" appearance settings that shows only sticky posts.
 * option to set the title when displayed on the home page.
 * makes use of new thumbnails and "featured images" for wordpress 2.9.2 and wordpress 3.0
