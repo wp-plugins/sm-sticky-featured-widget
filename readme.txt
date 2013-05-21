@@ -3,9 +3,9 @@
 Contributors: Sethmatics Inc feat. Seth Carstens
 Donate link: http://sethmatics.com/extend/plugins/sm-sticky-widget
 Tags: widgets, sticky, featured, classipress
-Requires at least: 3.0
-Tested up to: 3.2.1
-Stable tag: 1.2.2
+Requires at least: 3.2
+Tested up to: 3.5
+Stable tag: 1.2.3
 
 A tiny but high in demand widget to post sticky or "featured" posts into any widget area. Widget provided by http://sethmatics.com/.
 
@@ -62,6 +62,8 @@ Add the following style to your ClassiPress child themes stylesheet and then upl
 }
 
 == Changelog ==
+- added readmore filter for customizing  the "..." at the end of the excerpt
+- fixed widget title issue regarding widget filter and multi-language support
 - Updated for custom post types used in ClassiPress.
 - Heavily modified the queries and is now 100% ClassiPress compliant.
 - See upgrade notices for more information about each version

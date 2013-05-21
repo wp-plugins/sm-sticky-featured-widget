@@ -4,7 +4,7 @@ Plugin Name: SM Sticky Featured Widget
 Plugin URI: http://sethmatics.com/extend/plugins/sm-sticky-widget
 Description: A tiny but high in demand widget to post sticky or "featured" posts into any widget area complient with ClassiPress. 
 Author: Seth Carstens
-Version: 1.2.2
+Version: 1.2.3
 Author URI: http://sethmatics.com/
 */
 
@@ -23,7 +23,8 @@ class WP_Widget_smSticky extends WP_Widget {
 	function widget($args, $instance) {
 		wp_reset_query();
 		extract($args);
-		
+		$readmore_text = apply_filters('wp_widget_smsticky_readmore_text', '...');
+
 		//detect and set configuration for classipress or standard wordpress theme
 		if(post_type_exists('ad_listing')) { $cp = true; $postType = 'ad_listing'; $catType = 'ad_cat'; }
 		else { $cp = false; $postType = 'post'; $catType = 'category'; }
@@ -74,10 +75,12 @@ class WP_Widget_smSticky extends WP_Widget {
 		echo $before_widget;
 		
 		//if not on the home page, we must be in a category, display that title instead.
-		if( !is_home() && $catTitles) echo $before_title . __('Featured in ') . $term->name . $after_title;	
+		if( !is_home() && !is_front_page() && $catTitles) {
+			echo $before_title . __('Featured in ') . $term->name . $after_title;
+		}
 		//means this is the home page : use defined title and exclude blog category ID's
 		else {
-			if(isset($instance['title'])) echo $before_title . $instance['title'] . $after_title;
+			if(isset($instance['title'])) echo $before_title . $title . $after_title;
 			else  echo $before_title . __('Sticky Posts', 'cp') . $after_title;			
 		}
 		
@@ -98,9 +101,9 @@ class WP_Widget_smSticky extends WP_Widget {
 					echo '</a>';
 				}	 ?>
 				</div>
-				<h3><a href="<?php the_permalink(); ?>"><?php if (mb_strlen(get_the_title()) >= 40) echo mb_substr(get_the_title(), 0, 40).'...'; else the_title(); ?></a></h3>
+				<h3><a href="<?php the_permalink(); ?>"><?php if (mb_strlen(get_the_title()) >= 40) echo mb_substr(get_the_title(), 0, 40).$readmore_text; else the_title(); ?></a></h3>
 				<p class="side-meta"><span class="folder"><?php if (get_the_category()) the_category(', '); else echo get_the_term_list($post->ID, 'ad_cat', '', ', ', ''); ?></span> <?php if(get_post_meta(get_the_ID(), 'cp_ad_sold', true) == 'yes') : echo apply_filters('sticky_featured_sold_text', ' '); else: ?>| <?php echo cp_get_price(get_the_ID(), 'cp_price'); ?>				<?php endif; ?>																							<!--<?php if(get_post_meta(get_the_ID(), 'price', true)) cp_get_price_legacy(get_the_ID()); else cp_get_price(get_the_ID(), 'cp_price'); ?></p>-->
-				<p><?php echo mb_substr(strip_tags(get_the_content()), 0, 80).'...';?></p>
+				<p><?php echo mb_substr(strip_tags(get_the_content()), 0, 80).$readmore_text;?></p>
 			</li>
 			<?php
 			else :	
@@ -112,7 +115,7 @@ class WP_Widget_smSticky extends WP_Widget {
 					echo '</a>';
 				}		
 				echo '<a href="' . get_permalink() . '">' . get_the_title() . '</a>';
-				echo '<p style="margin: 0px;">'.mb_substr(strip_tags(get_the_content()), 0, 160).'...'.'</p>';
+				echo '<p style="margin: 0px;">'.mb_substr(strip_tags(get_the_content()), 0, 160).$readmore_text.'</p>';
 				echo '<br style="clear: both;" />';
 				echo '</li>';
 			endif;
