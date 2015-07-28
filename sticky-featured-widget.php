@@ -4,7 +4,7 @@ Plugin Name: SM Sticky Featured Widget
 Plugin URI: http://sethmatics.com/extend/plugins/sm-sticky-widget
 Description: A tiny but high in demand widget to post sticky or "featured" posts into any widget area complient with ClassiPress. 
 Author: sethcarstens
-Version: 1.2.5
+Version: 1.2.6
 Author URI: http://sethmatics.com/
 */
 
@@ -84,7 +84,7 @@ class WP_Widget_smSticky extends WP_Widget {
 		else if($instance['showType'] == 'reg') $queryArrayOrString['post__not_in'] = get_option('sticky_posts');
 
 		//if there is a term, only display featured ads from that term assuming the option is turned on
-		if($term->slug && $catTitles) {
+		if(isset($term) && $term->slug && $catTitles) {
 			if($cp) $queryArrayOrString['ad_cat'] = $term->slug;
 			else $queryArrayOrString['category_name'] = $term->slug;
 		}
@@ -94,7 +94,7 @@ class WP_Widget_smSticky extends WP_Widget {
 		echo $before_widget;
 
 		//if not on the home page, we must be in a category, display that title instead.
-		if( !is_home() && !is_front_page() && $catTitles) {
+		if( isset($term) && ! is_home() && ! is_front_page() && $catTitles) {
 			echo $before_title . __('Featured in ') . $term->name . $after_title;
 		}
 		//means this is the home page : use defined title and exclude blog category ID's
@@ -121,7 +121,7 @@ class WP_Widget_smSticky extends WP_Widget {
 						}	 ?>
 					</div>
 					<h3><a href="<?php the_permalink(); ?>"><?php if (mb_strlen(get_the_title()) >= 40) echo mb_substr(get_the_title(), 0, 40).$readmore_text; else the_title(); ?></a></h3>
-					<p class="side-meta"><span class="folder"><?php if (get_the_category()) the_category(', '); else echo get_the_term_list($post->ID, 'ad_cat', '', ', ', ''); ?></span> <?php if(get_post_meta(get_the_ID(), 'cp_ad_sold', true) == 'yes') : echo apply_filters('sticky_featured_sold_text', ' '); else: ?>| <?php echo cp_get_price(get_the_ID(), 'cp_price'); ?>				<?php endif; ?>																							<!--<?php if(get_post_meta(get_the_ID(), 'price', true)) cp_get_price_legacy(get_the_ID()); else cp_get_price(get_the_ID(), 'cp_price'); ?></p>-->
+					<p class="side-meta"><span class="folder"><?php if (get_the_category()) the_category(', '); else echo get_the_term_list(get_the_ID(), 'ad_cat', '', ', ', ''); ?></span> <?php if(get_post_meta(get_the_ID(), 'cp_ad_sold', true) == 'yes') : echo apply_filters('sticky_featured_sold_text', ' '); else: ?>| <?php echo cp_get_price(get_the_ID(), 'cp_price'); ?>				<?php endif; ?>																							<!--<?php if(get_post_meta(get_the_ID(), 'price', true)) cp_get_price_legacy(get_the_ID()); else cp_get_price(get_the_ID(), 'cp_price'); ?></p>-->
 					<p><?php echo mb_substr(strip_tags(get_the_content()), 0, 80).$readmore_text;?></p>
 				</li>
 				<?php

@@ -5,7 +5,7 @@ Donate link: http://sethmatics.com/extend/plugins/sm-sticky-widget
 Tags: widgets, sticky, featured, classipress
 Requires at least: 3.2
 Tested up to: 4.2.3
-Stable tag: 1.2.5
+Stable tag: 1.2.6
 
 A tiny but high in demand widget to post sticky or "featured" posts into any widget area. Widget provided by http://sethmatics.com/.
 
